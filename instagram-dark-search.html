@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram 黑暗模式搜尋</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #bb86fc;
+        }
+        #searchForm {
+            margin-bottom: 20px;
+        }
+        #searchInput {
+            width: 70%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+            border: 1px solid #bb86fc;
+        }
+        #searchButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #bb86fc;
+            color: #121212;
+            border: none;
+            cursor: pointer;
+        }
+        #results {
+            list-style-type: none;
+            padding: 0;
+        }
+        #results li {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #1e1e1e;
+            border-radius: 5px;
+        }
+        #results a {
+            color: #03dac6;
+            text-decoration: none;
+        }
+        #results a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram 黑暗模式搜尋</h1>
+        <form id="searchForm">
+            <input type="text" id="searchInput" placeholder="輸入搜尋內容">
+            <button type="submit" id="searchButton">搜尋</button>
+        </form>
+        <ul id="results"></ul>
+    </div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const query = document.getElementById('searchInput').value + ' site:instagram.com';
+            fetchSearchResults(query);
+        });
+
+        async function fetchSearchResults(query) {
+            const resultsContainer = document.getElementById('results');
+            resultsContainer.innerHTML = '搜尋中...';
+
+            try {
+                // 注意：這裡應該替換為您的後端API端點
+                const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                if (data.items && data.items.length > 0) {
+                    resultsContainer.innerHTML = data.items.map(item => `
+                        <li>
+                            <a href="${item.link}" target="_blank">${item.title}</a>
+                            <p>${item.snippet}</p>
+                        </li>
+                    `).join('');
+                } else {
+                    resultsContainer.innerHTML = '沒有找到結果';
+                }
+            } catch (error) {
+                console.error('搜尋錯誤:', error);
+                resultsContainer.innerHTML = '搜尋時發生錯誤，請稍後再試。';
+            }
+        }
+    </script>
+</body>
+</html>
