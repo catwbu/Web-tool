@@ -1,141 +1,230 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="zh-TW" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>我的網頁工具 Blog</title>
+    <title>程式下載 - 深色模式</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap');
+
         :root {
-            --brand-bg-gradient: linear-gradient(to bottom, #c084fc, #a78bfa, #818cf8, #67e8f9);
+            --background-color: #1a1a1a;
+            --card-background: #2a2a2a;
+            --text-color: #e0e0e0;
+            --accent-color-1: #8695ed;
+            --accent-color-2: #ed8695;
+            --button-gradient: linear-gradient(135deg, #8695ed, #ed8695);
+            --button-hover-gradient: linear-gradient(135deg, #7a89e1, #e17a89);
         }
+
+        [data-theme="light"] {
+            --background-color: #f0f2f5;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --accent-color-1: #667eea;
+            --accent-color-2: #ea6676;
+            --button-gradient: linear-gradient(135deg, #667eea, #ea6676);
+            --button-hover-gradient: linear-gradient(135deg, #5a6fd6, #d65a68);
+        }
+
         body {
-            background-color: #f0f0f0;
-            font-family: Arial, sans-serif;
+            font-family: 'Noto Sans TC', sans-serif;
             margin: 0;
             padding: 0;
-            color: #333;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
-        .header {
-            background-color: #222529;
-            padding: 1rem;
-            text-align: center;
-        }
-        .header h1 {
-            background: var(--brand-bg-gradient) fixed;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2.5rem;
-            margin: 0;
-        }
+
         .container {
-            display: flex;
+            width: 90%;
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
-        .main-content {
-            flex: 2;
-            background-color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .sidebar {
-            flex: 1;
-            margin-left: 2rem;
-        }
-        .widget {
-            background-color: white;
-            padding: 1rem;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 2rem;
         }
-        h2, h3 {
-            background: var(--brand-bg-gradient) fixed;
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: var(--button-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        .tool-item {
-            margin-bottom: 2rem;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 1rem;
+
+        .theme-switch-wrapper {
+            display: flex;
+            align-items: center;
         }
-        .tool-item:last-child {
-            border-bottom: none;
+
+        .theme-switch {
+            display: inline-block;
+            height: 34px;
+            position: relative;
+            width: 60px;
         }
-        .tool-link {
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 4px;
+            content: "";
+            height: 26px;
+            left: 4px;
+            position: absolute;
+            transition: .4s;
+            width: 26px;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background: var(--button-gradient);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .program-card {
+            background-color: var(--card-background);
+            border-radius: 15px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .program-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            background: var(--button-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .program-description {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .download-button {
             display: inline-block;
             padding: 0.5rem 1rem;
-            background: var(--brand-bg-gradient) fixed;
-            color: #fff;
+            background: var(--button-gradient);
+            color: white;
             text-decoration: none;
             border-radius: 5px;
-            transition: transform 0.3s ease;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
         }
-        .tool-link:hover {
-            transform: translateY(-3px);
+
+        .download-button:hover {
+            background: var(--button-hover-gradient);
         }
-        .categories, .recent-posts {
-            list-style-type: none;
-            padding: 0;
-        }
-        .categories li, .recent-posts li {
-            margin-bottom: 0.5rem;
-        }
-        .categories a, .recent-posts a {
-            color: #333;
-            text-decoration: none;
-        }
-        .categories a:hover, .recent-posts a:hover {
-            text-decoration: underline;
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .program-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <h1>我的網頁工具 Blog</h1>
-    </header>
     <div class="container">
-        <main class="main-content">
-            <h2>最新工具</h2>
-            <article class="tool-item">
-                <h3>更強大的IG搜尋引擎</h3>
-                <p>這個工具可以幫助你搜尋</p>
-                <a href="instagram-dark-search.html" class="tool-link">使用工具</a>
-            </article>
-            <article class="tool-item">
-                <h3>密碼生成器</h3>
-                <p>生成安全、強大的密碼，可自定義長度和字符類型。</p>
-                <a href="#" class="tool-link">使用工具</a>
-            </article>
-            <article class="tool-item">
-                <h3>Base64 編碼/解碼</h3>
-                <p>快速進行Base64編碼和解碼，支持文本和文件。</p>
-                <a href="#" class="tool-link">使用工具</a>
-            </article>
-        </main>
-        <aside class="sidebar">
-            <div class="widget">
-                <h3>分類</h3>
-                <ul class="categories">
-                    <li><a href="#">編碼工具</a></li>
-                    <li><a href="#">設計工具</a></li>
-                    <li><a href="#">開發者工具</a></li>
-                    <li><a href="#">安全工具</a></li>
-                </ul>
+        <header>
+            <h1>程式下載</h1>
+            <div class="theme-switch-wrapper">
+                <label class="theme-switch" for="checkbox">               
+					<input type="checkbox" id="checkbox" checked />
+                    <div class="slider"></div>
+                </label>
             </div>
-            <div class="widget">
-                <h3>最近更新</h3>
-                <ul class="recent-posts">
-                    <li><a href="#">JSON 格式化工具上線</a></li>
-                    <li><a href="#">Markdown 預覽器功能更新</a></li>
-                    <li><a href="#">新增 CSS Flexbox 視覺化工具</a></li>
-                </ul>
+        </header>
+        <div class="program-grid">
+            <div class="program-card">
+                <h2 class="program-title">IG深度搜尋</h2>
+                <p class="program-description">輕鬆整理和管理您的文件，支持批量重命名和移動。快速查找、分類和組織您的文件，提高工作效率。</p>
+                <button class="download-button" onclick="simulateDownload('檔案管理助手')">使用</button>
             </div>
-        </aside>
+            <div class="program-card">
+                <h2 class="program-title">快速截圖工具</h2>
+                <p class="program-description">一鍵截圖，支持區域選擇和簡單的圖片編輯功能。輕鬆捕捉、標註和分享您的螢幕內容。</p>
+                <button class="download-button" onclick="simulateDownload('快速截圖工具')">下載</button>
+            </div>
+            <div class="program-card">
+                <h2 class="program-title">待辦事項管理器</h2>
+                <p class="program-description">高效管理您的任務和待辦事項，支持提醒和優先級設置。幫助您組織日程，提高生產力。</p>
+                <button class="download-button" onclick="simulateDownload('待辦事項管理器')">下載</button>
+            </div>
+            <div class="program-card">
+                <h2 class="program-title">簡易音樂播放器</h2>
+                <p class="program-description">輕量級音樂播放器，支持常見音頻格式和播放列表管理。享受您喜愛的音樂，打造個人化的聆聽體驗。</p>
+                <button class="download-button" onclick="simulateDownload('簡易音樂播放器')">下載</button>
+            </div>
+			            <div class="program-card">
+                <h2 class="program-title">檔案管理助手</h2>
+                <p class="program-description">輕鬆整理和管理您的文件，支持批量重命名和移動。快速查找、分類和組織您的文件，提高工作效率。</p>
+                <button class="download-button" onclick="simulateDownload('簡易音樂播放器')">下載</button>
+            </div>
+			
+        </div>
     </div>
+
+    <script>
+        const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+        const htmlElement = document.documentElement;
+
+        function switchTheme(e) {
+            if (e.target.checked) {
+                htmlElement.setAttribute('data-theme', 'dark');
+            } else {
+				htmlElement.setAttribute('data-theme', 'light');
+                
+            }    
+        }
+
+        toggleSwitch.addEventListener('change', switchTheme, false);
+
+        function simulateDownload(programName) {
+            alert(`開始下載 ${programName}。\n\n這只是一個模擬下載的示例。在實際應用中，這裡將觸發真實的下載過程。`);
+        }
+    </script>
 </body>
 </html>
