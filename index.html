@@ -139,22 +139,24 @@
             font-size: 1rem;
             margin-bottom: 1rem;
         }
-
+	
         .download-button {
-            display: inline-block;
-            padding: 0.5rem 1rem;
-            background: var(--button-gradient);
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
+    display: inline-block; /* 確保與按鈕樣式一致 */
+    padding: 0.5rem 1rem; /* 調整內邊距 */
+    background: var(--button-gradient); /* 按鈕背景色 */
+    color: white; /* 按鈕文字色 */
+    text-decoration: none; /* 移除連結下劃線 */
+    border-radius: 5px; /* 圓角 */
+    transition: all 0.3s ease; /* 過渡效果 */
+    border: none; /* 移除邊框，與按鈕一致 */
+    cursor: pointer; /* 鼠標樣式 */
+    font-size: 16px; /* 字體大小 */
+    line-height: 1.5; /* 行高，確保文字垂直居中 */
+}
 
-        .download-button:hover {
-            background: var(--button-hover-gradient);
-        }
+.download-button:hover {
+    background: var(--button-hover-gradient); /* 滑鼠懸停背景色 */
+}
 
         @media (max-width: 768px) {
             .container {
