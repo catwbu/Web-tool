@@ -141,18 +141,16 @@
         }
 	
         .download-button {
-    display: inline-block; /* 確保與按鈕樣式一致 */
-    padding: 0.5rem 1rem; /* 調整內邊距 */
-    background: var(--button-gradient); /* 按鈕背景色 */
-    color: white; /* 按鈕文字色 */
-    text-decoration: none; /* 移除連結下劃線 */
-    border-radius: 5px; /* 圓角 */
-    transition: all 0.3s ease; /* 過渡效果 */
-    border: none; /* 移除邊框，與按鈕一致 */
-    cursor: pointer; /* 鼠標樣式 */
-    font-size: 16px; /* 字體大小 */
-    line-height: 1.5; /* 行高，確保文字垂直居中 */
-}
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: var(--button-gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
 
 .download-button:hover {
     background: var(--button-hover-gradient); /* 滑鼠懸停背景色 */
@@ -183,7 +181,7 @@
             <div class="program-card">
                 <h2 class="program-title">IG深度搜尋</h2>
                 <p class="program-description">輕鬆整理和管理您的文件，支持批量重命名和移動。快速查找、分類和組織您的文件，提高工作效率。</p>
-                <a href="instagram-dark-search.html" class="download-button">下載</a>
+                <button class="download-button" onclick="redirectToPage()">下載</button>
             </div>
             <div class="program-card">
                 <h2 class="program-title">快速截圖工具</h2>
@@ -227,6 +225,9 @@
         function simulateDownload(programName) {
             alert(`開始下載 ${programName}。\n\n這只是一個模擬下載的示例。在實際應用中，這裡將觸發真實的下載過程。`);
         }
+	function redirectToPage() {
+    window.location.href = 'instagram-dark-search.html';
+}
     </script>
 </body>
 </html>
